@@ -1,0 +1,33 @@
+# AI Writing Assistant - Requirements
+
+## Core Dependencies
+- OpenAI API access (GPT-3.5-turbo or GPT-4)
+- Modern web browser with JavaScript enabled
+
+## Browser Requirements
+- Chrome 80+ (recommended)
+- Firefox 75+
+- Safari 13+
+- Edge 80+
+
+## API Requirements
+- OpenAI API key
+- Internet connection for API calls
+
+## Local Storage
+- Browser must support localStorage for API key persistence
+
+## No Server Required
+- This is a client-side application
+- Can be deployed on any static hosting service
+- No backend dependencies
+
+## Optional Enhancements
+- HTTPS for production deployment (required for clipboard API)
+- CDN access for external fonts and icons
+
+## Development Notes
+- Built with vanilla JavaScript (ES6+)
+- Uses modern CSS features (backdrop-filter, CSS Grid, Flexbox)
+- Responsive design for mobile and desktop
+- Progressive enhancement approach 

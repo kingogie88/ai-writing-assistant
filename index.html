@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Writing Assistant - Improve Your Writing with AI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-robot"></i> AI Writing Assistant</h1>
+                <p>Transform your writing with AI-powered insights and suggestions</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="input-container">
+                    <label for="textInput" class="input-label">
+                        <i class="fas fa-pen"></i> Enter your text here
+                    </label>
+                    <textarea 
+                        id="textInput" 
+                        class="text-input" 
+                        placeholder="Type or paste your text here to get AI-powered analysis and suggestions..."
+                        rows="8"
+                    ></textarea>
+                    <div class="input-actions">
+                        <button id="analyzeBtn" class="btn btn-primary">
+                            <i class="fas fa-magic"></i> Analyze with AI
+                        </button>
+                        <button id="clearBtn" class="btn btn-secondary">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="resultsSection" class="results-section hidden">
+                <div class="results-header">
+                    <h2><i class="fas fa-chart-line"></i> AI Analysis Results</h2>
+                    <div class="loading-spinner hidden" id="loadingSpinner">
+                        <div class="spinner"></div>
+                        <p>Analyzing your text...</p>
+                    </div>
+                </div>
+
+                <!-- Analysis Cards -->
+                <div class="analysis-grid">
+                    <!-- Grammar & Style Card -->
+                    <div class="analysis-card">
+                        <div class="card-header">
+                            <i class="fas fa-spell-check"></i>
+                            <h3>Grammar & Style</h3>
+                        </div>
+                        <div class="card-content" id="grammarContent">
+                            <p class="placeholder-text">Click "Analyze with AI" to get started</p>
+                        </div>
+                    </div>
+
+                    <!-- Tone Analysis Card -->
+                    <div class="analysis-card">
+                        <div class="card-header">
+                            <i class="fas fa-heart"></i>
+                            <h3>Tone Analysis</h3>
+                        </div>
+                        <div class="card-content" id="toneContent">
+                            <p class="placeholder-text">Click "Analyze with AI" to get started</p>
+                        </div>
+                    </div>
+
+                    <!-- Content Suggestions Card -->
+                    <div class="analysis-card">
+                        <div class="card-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Content Suggestions</h3>
+                        </div>
+                        <div class="card-content" id="suggestionsContent">
+                            <p class="placeholder-text">Click "Analyze with AI" to get started</p>
+                        </div>
+                    </div>
+
+                    <!-- Improved Version Card -->
+                    <div class="analysis-card full-width">
+                        <div class="card-header">
+                            <i class="fas fa-edit"></i>
+                            <h3>Improved Version</h3>
+                        </div>
+                        <div class="card-content">
+                            <textarea 
+                                id="improvedText" 
+                                class="improved-text-input" 
+                                placeholder="Your improved text will appear here..."
+                                rows="6"
+                            ></textarea>
+                            <div class="improved-actions">
+                                <button id="copyBtn" class="btn btn-success">
+                                    <i class="fas fa-copy"></i> Copy Text
+                                </button>
+                                <button id="replaceBtn" class="btn btn-primary">
+                                    <i class="fas fa-exchange-alt"></i> Replace Original
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- API Configuration Section -->
+            <section class="config-section">
+                <div class="config-container">
+                    <h3><i class="fas fa-cog"></i> API Configuration</h3>
+                    <div class="api-input-group">
+                        <label for="apiKeyInput">OpenAI API Key:</label>
+                        <input 
+                            type="password" 
+                            id="apiKeyInput" 
+                            class="api-input" 
+                            placeholder="Enter your OpenAI API key here"
+                        >
+                        <button id="saveApiKeyBtn" class="btn btn-secondary">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                    </div>
+                    <p class="config-note">
+                        <i class="fas fa-info-circle"></i> 
+                        Your API key is stored locally in your browser and never shared.
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 AI Writing Assistant. Built with ❤️ and AI.</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
