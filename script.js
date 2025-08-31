@@ -34,7 +34,6 @@ const SECURITY_CONFIG = {
 // Application State Management
 class AppState {
     constructor() {
-        this.apiKey = '';
         this.isAnalyzing = false;
         this.requestCount = 0;
         this.lastRequestTime = 0;
@@ -293,7 +292,6 @@ class WritingAssistant {
     init() {
         try {
             this.bindEvents();
-            this.loadSavedApiKey();
             this.updateUI();
             this.setupSecurityHeaders();
             this.initializeServiceWorker();
@@ -333,16 +331,10 @@ class WritingAssistant {
         this.safeBindEvent('clearBtn', 'click', () => this.clearAll());
         this.safeBindEvent('copyBtn', 'click', () => this.copyImprovedText());
         this.safeBindEvent('replaceBtn', 'click', () => this.replaceOriginalText());
-        this.safeBindEvent('saveApiKeyBtn', 'click', () => this.saveApiKey());
 
         // Input validation on change
         this.safeBindEvent('textInput', 'input', () => this.debounce(this.updateUI, 300));
         this.safeBindEvent('improvedText', 'input', () => this.debounce(this.updateUI, 300));
-
-        // API key input
-        this.safeBindEvent('apiKeyInput', 'input', (e) => {
-            this.appState.apiKey = e.target.value;
-        });
 
         // Keyboard shortcuts with security
         this.safeBindEvent(document, 'keydown', (e) => this.handleKeyboardShortcuts(e));
@@ -474,36 +466,22 @@ class WritingAssistant {
     }
 
     async performAIAnalysis(text, apiKey) {
-        const prompt = this.createAnalysisPrompt(text);
+        // Get selected provider
+        const providerSelect = document.getElementById('providerSelect');
+        const selectedProvider = providerSelect ? providerSelect.value : 'auto';
         
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        // Call our secure backend instead of OpenAI directly
+        const response = await fetch('/api/analyze', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`,
-                'User-Agent': 'AI-Writing-Assistant/2.0.0'
             },
-            body: JSON.stringify({
-                model: 'gpt-3.5-turbo',
-                messages: [
-                    {
-                        role: 'system',
-                        content: 'You are an expert writing assistant that provides detailed analysis and suggestions for improving text. Always respond in the exact JSON format requested.'
-                    },
-                    {
-                        role: 'user',
-                        content: prompt
-                    }
-                ],
-                max_tokens: 1500,
-                temperature: 0.7,
-                timeout: 30000 // 30 second timeout
-            })
+            body: JSON.stringify({ text, provider: selectedProvider })
         });
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            const errorMessage = errorData.error?.message || `HTTP ${response.status}: ${response.statusText}`;
+            const errorMessage = errorData.error || `HTTP ${response.status}: ${response.statusText}`;
             
             if (response.status === 429) {
                 throw new Error('QuotaExceededError');
@@ -517,18 +495,15 @@ class WritingAssistant {
         }
 
         const data = await response.json();
-        const content = data.choices?.[0]?.message?.content;
         
-        if (!content) {
-            throw new Error('No response content received from AI');
+        if (!data.success || !data.analysis) {
+            throw new Error('Invalid response from server');
         }
 
-        try {
-            return JSON.parse(content);
-        } catch (parseError) {
-            console.error('Failed to parse AI response:', content);
-            throw new Error('Invalid response format from AI');
-        }
+        // Store the provider used for display
+        this.lastUsedProvider = data.provider;
+        
+        return data.analysis;
     }
 
     createAnalysisPrompt(text) {
@@ -578,12 +553,27 @@ Focus on providing actionable, specific feedback that will help improve the writ
                 improvedText.value = analysis.improved_version || 'No improved version available';
             }
 
+            // Show which provider was used
+            this.showProviderInfo();
+
             // Add CSS for analysis items
             this.addAnalysisStyles();
             
         } catch (error) {
             this.handleError(error, 'Display results');
             this.displayErrorResults();
+        }
+    }
+
+    showProviderInfo() {
+        if (this.lastUsedProvider) {
+            const providerNames = {
+                'openai': 'OpenAI GPT',
+                'gemini': 'Google Gemini'
+            };
+            
+            const providerName = providerNames[this.lastUsedProvider] || this.lastUsedProvider;
+            this.showToast(`Analysis completed using ${providerName}`, 'success');
         }
     }
 

@@ -33,6 +33,14 @@
                         rows="8"
                     ></textarea>
                     <div class="input-actions">
+                        <div class="provider-selector">
+                            <label for="providerSelect">AI Provider:</label>
+                            <select id="providerSelect" class="provider-select">
+                                <option value="auto">Auto-select (Recommended)</option>
+                                <option value="openai">OpenAI GPT</option>
+                                <option value="gemini">Google Gemini</option>
+                            </select>
+                        </div>
                         <button id="analyzeBtn" class="btn btn-primary">
                             <i class="fas fa-magic"></i> Analyze with AI
                         </button>
@@ -114,26 +122,16 @@
                 </div>
             </section>
 
-            <!-- API Configuration Section -->
+            <!-- Security Notice Section -->
             <section class="config-section">
                 <div class="config-container">
-                    <h3><i class="fas fa-cog"></i> API Configuration</h3>
-                    <div class="api-input-group">
-                        <label for="apiKeyInput">OpenAI API Key:</label>
-                        <input 
-                            type="password" 
-                            id="apiKeyInput" 
-                            class="api-input" 
-                            placeholder="Enter your OpenAI API key here"
-                        >
-                        <button id="saveApiKeyBtn" class="btn btn-secondary">
-                            <i class="fas fa-save"></i> Save
-                        </button>
+                    <h3><i class="fas fa-shield-alt"></i> Security Notice</h3>
+                    <div class="security-info">
+                        <p><i class="fas fa-check-circle"></i> Your API keys are securely stored on our server</p>
+                        <p><i class="fas fa-check-circle"></i> Support for OpenAI GPT and Google Gemini</p>
+                        <p><i class="fas fa-check-circle"></i> All requests are rate-limited and monitored</p>
+                        <p><i class="fas fa-check-circle"></i> No sensitive data is stored in your browser</p>
                     </div>
-                    <p class="config-note">
-                        <i class="fas fa-info-circle"></i> 
-                        Your API key is stored locally in your browser and never shared.
-                    </p>
                 </div>
             </section>
         </main>
