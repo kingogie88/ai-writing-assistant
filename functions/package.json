@@ -1,0 +1,13 @@
+{
+  "name": "ai-writing-assistant-functions",
+  "version": "1.0.0",
+  "description": "Netlify serverless functions for AI Writing Assistant",
+  "main": "api.js",
+  "dependencies": {
+    "openai": "^4.20.1",
+    "@google/generative-ai": "^0.2.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

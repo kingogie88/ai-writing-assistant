@@ -15,7 +15,7 @@
  * - Accessibility compliance
  * - Progressive enhancement
  * 
- * @author AI Writing Assistant Team
+ * @author Writing Assistant Team
  * @version 2.0.0
  * @license MIT
  */
@@ -470,8 +470,8 @@ class WritingAssistant {
         const providerSelect = document.getElementById('providerSelect');
         const selectedProvider = providerSelect ? providerSelect.value : 'auto';
         
-        // Call our secure backend instead of OpenAI directly
-        const response = await fetch('/api/analyze', {
+        // Call our Netlify serverless function
+        const response = await fetch('/.netlify/functions/api/analyze', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
