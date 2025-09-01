@@ -7,6 +7,10 @@
     "build": "echo 'Build complete - ready for Netlify deployment'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "dependencies": {
+    "openai": "^4.20.1",
+    "@google/generative-ai": "^0.2.1"
+  },
   "keywords": [
     "ai",
     "writing",
